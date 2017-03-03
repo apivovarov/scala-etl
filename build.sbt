@@ -21,10 +21,6 @@ scalacOptions in Global ++= Seq(
   "-Xlint"
 )
 
-javaOptions in Global ++= Seq(
-  "-XX:MaxPermSize=1024m"
-)
-
 javacOptions in Global ++= Seq(
   "-encoding", "UTF-8",
   "-source", javaVersion,
@@ -32,10 +28,8 @@ javacOptions in Global ++= Seq(
 )
 
 lazy val sparkLib = Seq(
-  "com.databricks" % "spark-csv_2.11" % "1.5.0" % Provided withSources(),
   "org.apache.spark" %% "spark-core" % sparkVersion % Provided withSources() withJavadoc(),
-  "org.apache.spark" %% "spark-sql" % sparkVersion % Provided withSources() withJavadoc(),
-  "org.apache.spark" %% "spark-hive" % sparkVersion % Provided withSources() withJavadoc()
+  "org.apache.spark" %% "spark-sql" % sparkVersion % Provided withSources() withJavadoc()
 )
 
 lazy val auxLib = Seq(
@@ -43,7 +37,7 @@ lazy val auxLib = Seq(
   "commons-codec" % "commons-codec" % "1.10" % Provided,
   "org.apache.commons" % "commons-lang3" % "3.3.2" % Provided withSources(),
   // parsing
-  "net.sf.supercsv" % "super-csv" % "2.2.0" % Provided withSources(),
+  "com.databricks" % "spark-csv_2.11" % "1.5.0" withSources(),
   // utils
   "org.slf4j" % "slf4j-api" % "1.7.10" % Provided withSources()
 )

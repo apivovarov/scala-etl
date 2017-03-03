@@ -28,7 +28,13 @@ object Spark {
     if (!conf.contains("spark.master")) conf.setMaster("local[4]") // running locally, usually tests
 
     assignSc(new SparkContext(conf))
-    assignSpark(new SparkSession(_sc))
+
+    val ss = SparkSession.builder.
+      master("local[4]")
+      .appName(AppName)
+      .enableHiveSupport()
+      .getOrCreate()
+    assignSpark(ss)
   }
 
   // should be called in spark-shell

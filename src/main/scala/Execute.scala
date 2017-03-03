@@ -1,13 +1,12 @@
 import utils.Spark
 
 /**
-  * Created by pivovaa on 3/2/17.
+  * Execute
   */
 object Execute {
 
   def main(args: Array[String]) {
     Spark.AppName = "scala-etl"
-    org.apache.log4j.Logger.getLogger("akka").setLevel(org.apache.log4j.Level.WARN)
 
     run()
   }
@@ -17,6 +16,16 @@ object Execute {
     try {
       Spark.getSc()
       Spark.getSpark()
+      val datasetsPath = "/hart/datasets"
+      val outputPath = "/hart/output"
+
+      val etl = new ScalaEtl()
+      etl.loadFilesAndJoin(datasetsPath)
+
+      val aol = new Aol()
+      aol.loadAndGroup(datasetsPath)
+
+      etl.joinSearchResultAndSave(aol, outputPath)
 
     } finally {
       Spark.stopContexts()
